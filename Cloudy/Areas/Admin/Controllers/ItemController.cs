@@ -125,8 +125,8 @@ namespace Cloudy.Areas.Admin.Controllers
             public async Task<ActionResult> DeleteConfirmed(int id)
             {
                 Item item = await db.Items.FindAsync(id);
-                using (var transaction = new TransactionScope(
-                        TransactionScopeAsyncFlowOption.Enabled))
+                //using (var transaction = new TransactionScope(
+                //        TransactionScopeAsyncFlowOption.Enabled))
                 {
                     try
                     {
@@ -136,9 +136,9 @@ namespace Cloudy.Areas.Admin.Controllers
                         db.Items.Remove(item);
 
                         await db.SaveChangesAsync();
-                        transaction.Complete();
+                       // transaction.Complete();
                     }
-                    catch { transaction.Dispose(); }
+                    catch { /*transaction.Dispose();*/ }
                 }
 
                 return RedirectToAction("Index");
