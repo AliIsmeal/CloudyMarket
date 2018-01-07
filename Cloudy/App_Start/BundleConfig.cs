@@ -29,6 +29,31 @@ namespace Cloudy
             bundles.Add(new ScriptBundle("~/bundles/admin").Include(
                       "~/Scripts/AdminMenu.js"
                      ));
+            bundles.Add(new ScriptBundle("~/bundles/ui").Include(
+                     "~/Scripts/carret.js",
+                     "~/Scripts/JWPlayer.js",
+                     "~/Scripts/code.js",
+                     "~/Scripts/RegisterUser.js",
+                     "~/Scripts/login.js",
+                     "~/Scripts/forgot-password.js"
+                     ));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/membership").Include(
+                "~/Content/navbar.css",
+                "~/Content/thumbnails.css",
+                "~/Content/ProductContent.css",
+                "~/Content/Carret.css",
+                "~/Content/html.css",
+                "~/Content/RegisterCode.css",
+                "~/Content/RegisterUser.css",
+                "~/Content/login.css",
+                "~/Content/forgot-password.css"
+                ));
+
         }
     }
 }

@@ -211,13 +211,18 @@
     <Compile Include="Areas\Admin\Controllers\ProductTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\SectionController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubscriptionProductController.cs" />
     <Compile Include="Areas\Admin\Extensions\ConversionExtensions.cs" />
     <Compile Include="Areas\Admin\Models\EditButtonModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SmallButtonModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubscriptionProductModel.cs" />
+    <Compile Include="Comparers\ProductSectionEqualityComparer.cs" />
+    <Compile Include="Comparers\ThumbnailEqualityComparer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductContentController.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\ItemType.cs" />
     <Compile Include="Entities\Part.cs" />
@@ -229,22 +234,56 @@
     <Compile Include="Entities\Subscription.cs" />
     <Compile Include="Entities\SubscriptionProduct.cs" />
     <Compile Include="Entities\UserSubscription.cs" />
+    <Compile Include="Extensions\EmaiExtensions.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\HttpContextExtensions.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Extensions\SectionExtensions.cs" />
+    <Compile Include="Extensions\SubscriptionExtensions.cs" />
+    <Compile Include="Extensions\ThumbnailExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ContentViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Areas\Admin\Models\ProductItemModel.cs" />
+    <Compile Include="Models\ProductItemRow.cs" />
+    <Compile Include="Models\ProductSection.cs" />
+    <Compile Include="Models\ProductSectionModel.cs" />
+    <Compile Include="Models\RegisterUserModel.cs" />
+    <Compile Include="Models\ThumbnailAreaModel.cs" />
+    <Compile Include="Models\ThumbnailModel.cs" />
+    <Compile Include="Models\UserSubscriptionModel.cs" />
+    <Compile Include="Models\UserSubscriptionViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\carret.css" />
+    <Content Include="Content\forgot-password.css" />
+    <Content Include="Content\html.css" />
+    <Content Include="Content\Images\csharp-for-beginners.png" />
+    <Content Include="Content\Images\csharp-zip.png" />
+    <Content Include="Content\Images\laptop.jpg" />
+    <Content Include="Content\Images\pdf.png" />
+    <Content Include="Content\Images\unit-testing.png" />
+    <Content Include="Content\Images\video.png" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\Logo\membership-icon-30x152.png" />
+    <Content Include="Content\Logo\membership-icon-45x184.png" />
+    <Content Include="Content\navbar.css" />
+    <Content Include="Content\ProductContent.css" />
+    <Content Include="Content\RegisterCode.css" />
+    <Content Include="Content\RegisterUser.css" />
+    <Content Include="Content\thumbnails.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -308,7 +347,16 @@
     <Content Include="Areas\Admin\Views\ProductItem\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ProductItem\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ProductItem\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_EditButtonDetailPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\SubscriptionProduct\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SubscriptionProduct\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SubscriptionProduct\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SubscriptionProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SubscriptionProduct\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\carret.js" />
+    <Content Include="Scripts\code.js" />
+    <Content Include="Scripts\forgot-password.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -316,7 +364,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JWPlayer.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\RegisterUser.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -355,10 +406,29 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shared\_SmallButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_TableButtonPartial.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Subscriptions.cshtml" />
+    <Content Include="Views\Shared\_ForgotPasswordPanelPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPanelPartial.cshtml" />
+    <Content Include="Views\Shared\_RegisterCodePartial.cshtml" />
+    <Content Include="Views\Shared\_RegisterUserPartial.cshtml" />
+    <Content Include="Views\Shared\_ThumbnailAreaPartial.cshtml" />
+    <Content Include="Views\ProductContent\Index.cshtml" />
+    <Content Include="Views\ProductContent\_ProductSectionPartial.cshtml" />
+    <Content Include="Views\ProductContent\_ProductItemRowPartial.cshtml" />
+    <Content Include="Views\ProductContent\Content.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Product\" />
+    <Folder Include="Views\RegisterCode\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

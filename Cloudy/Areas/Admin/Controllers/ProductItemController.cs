@@ -19,6 +19,9 @@ namespace Cloudy.Areas.Admin.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin/ProductItem
+
+
+        // GET: Admin/ProductItem
         public async Task<ActionResult> Index()
         {
             return View(await db.ProductItems.Convert(db));
@@ -84,7 +87,6 @@ namespace Cloudy.Areas.Admin.Controllers
             return View(await productItem.Convert(db));
         }
 
-
         // POST: Admin/ProductItem/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -105,7 +107,6 @@ namespace Cloudy.Areas.Admin.Controllers
             return View(productItem);
         }
 
-
         // GET: Admin/ProductItem/Delete/5
         public async Task<ActionResult> Delete(int? itemId, int? productId)
         {
@@ -122,7 +123,6 @@ namespace Cloudy.Areas.Admin.Controllers
             return View(await productItem.Convert(db));
         }
 
-
         // POST: Admin/ProductItem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -135,9 +135,8 @@ namespace Cloudy.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-
         private async Task<ProductItem> GetProductItem(
-           int? itemId, int? productId)
+            int? itemId, int? productId)
         {
             try
             {
@@ -150,7 +149,6 @@ namespace Cloudy.Areas.Admin.Controllers
             }
             catch { return null; }
         }
-
 
         protected override void Dispose(bool disposing)
         {
